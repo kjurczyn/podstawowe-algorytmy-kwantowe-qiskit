@@ -2,7 +2,7 @@
 
 ## Algorytmy
 - Algorytm faktoryzacji liczb całkowitych Shor'a
-- Algorytm logarytmów dyskretnych Shor'a
+- Algorytm problem Simona
 - Algorytm Deutsch'a-Jozs'y
 - Agorytm Grover'a
 
