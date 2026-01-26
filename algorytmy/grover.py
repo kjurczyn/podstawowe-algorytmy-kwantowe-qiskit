@@ -6,6 +6,14 @@ import numpy as np
 
 
 def grover_oracle_generate(n: int, marked_states: list) -> Tuple[qs.QuantumCircuit, Gate]:
+    """
+    @brief Generuje wyrocznię (oracle) dla algorytmu Grovera.
+
+    @param n Liczba kubitów
+    @param marked_states Lista stanów zaznaczonych do wyszukania
+    @return Krotka zawierająca obwód kwantowy wyrocznii oraz bramkę wyrocznii
+    @throws ValueError Jeśli długość stanu przekracza n
+    """
     oracle = qs.QuantumCircuit(n)
 
     for state in marked_states:
@@ -24,8 +32,14 @@ def grover_oracle_generate(n: int, marked_states: list) -> Tuple[qs.QuantumCircu
     return oracle, oracle_gate
 
 
-# Generate GU_f
 def grover_base_generate(oracle: Gate, n: int) -> Tuple[qs.QuantumCircuit, Gate]:
+    """
+    @brief Generuje operator bazowy Grovera (GU_f) zawierający wyrocznię i operator dyfuzji.
+
+    @param oracle Bramka wyrocznii
+    @param n Liczba kubitów
+    @return Krotka zawierająca obwód kwantowy operatora Grovera oraz jego bramkę
+    """
     grover_op_circuit = qs.QuantumCircuit(n)
     grover_op_circuit.append(oracle, range(n))
 
@@ -43,6 +57,14 @@ def grover_base_generate(oracle: Gate, n: int) -> Tuple[qs.QuantumCircuit, Gate]
 
 
 def grover_algorithm_circuit_generate(oracle: Gate, n: int, num_states: int) -> Tuple[qs.QuantumCircuit, int]:
+    """
+    @brief Generuje pełny obwód kwantowy dla algorytmu Grovera.
+
+    @param oracle Bramka wyrocznii
+    @param n Liczba kubitów
+    @param num_states Liczba stanów zaznaczonych
+    @return Krotka zawierająca obwód kwantowy algorytmu Grovera oraz liczbę optymalnych iteracji
+    """
     grover_circuit = qs.QuantumCircuit(n, n)
     grover_circuit.h(range(n))
 

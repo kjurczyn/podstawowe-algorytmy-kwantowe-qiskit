@@ -7,11 +7,27 @@ import random
 
 
 def mod_exp(a, x, N):
+    """
+    @brief Oblicza modułową potęgę a^x mod N.
+
+    @param a Podstawa
+    @param x Wykładnik
+    @param N Moduł
+    @return Wynik operacji a^x mod N
+    """
     return pow(a, x, N)
 
+
 def period_finding_circuit(a, N):
+    """
+    @brief Tworzy obwód kwantowy do znajdowania okresu funkcji f(x) = a^x mod N.
+
+    @param a Podstawa dla funkcji modułowej
+    @param N Moduł
+    @return Obwód kwantowy z transformacją Fouriera i pomiarami
+    """
     n = N.bit_length()
-    t = 2 * n 
+    t = 2 * n
 
     qc = QuantumCircuit(t + n, t)
 
@@ -23,17 +39,26 @@ def period_finding_circuit(a, N):
         exponent = 2 ** i
         U = QuantumCircuit(n)
         for _ in range(exponent):
-            U = U.compose(QuantumCircuit(n).unitary(
+            U = U.compose(QuantumCircuit(n).unitary(  # type: ignore
                 np.eye(2**n), range(n)
-            ))
-        qc.append(U.to_gate().control(), [i] + list(range(t, t+n)))
+            ))  # type: ignore
+        qc.append(U.to_gate().control(), [  # type: ignore
+                  i] + list(range(t, t+n)))  # type: ignore
 
     qc.append(QFT(t, inverse=True), range(t))
     qc.measure(range(t), range(t))
 
     return qc
 
+
 def find_period(a, N):
+    """
+    @brief Znajduje okres funkcji f(x) = a^x mod N.
+
+    @param a Podstawa dla funkcji modułowej
+    @param N Moduł
+    @return Okres funkcji lub None jeśli nie znaleziono
+    """
     n = N.bit_length()
     t = 2 * n
 
@@ -56,8 +81,13 @@ def find_period(a, N):
     return r
 
 
-
 def shor(N):
+    """
+    @brief Implementacja algorytmu Shora do faktoryzacji liczby N.
+
+    @param N Liczba do faktoryzacji
+    @return Krotka zawierająca dwa czynniki pierwsze liczby N
+    """
     if N % 2 == 0:
         return 2, N // 2
 

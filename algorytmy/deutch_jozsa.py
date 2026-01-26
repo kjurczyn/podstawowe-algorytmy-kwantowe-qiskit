@@ -10,6 +10,13 @@ ORACLE_BALANCED = OracleType(2)
 
 
 def dj_oracle_generate(oracle_type: OracleType, n: int) -> Tuple[qs.QuantumCircuit, Gate]:
+    """
+    @brief Generuje wyrocznię (oracle) dla algorytmu Deutscha-Jozsy.
+
+    @param oracle_type Typ wyrocznii: ORACLE_CONST_0, ORACLE_CONST_1 lub ORACLE_BALANCED
+    @param n Liczba kubitów wejściowych
+    @return Krotka zawierająca obwód kwantowy wyrocznii oraz bramkę wyrocznii
+    """
     oracle = qs.QuantumCircuit(n+1)
 
     if oracle_type == ORACLE_CONST_0:
@@ -38,6 +45,13 @@ def dj_oracle_generate(oracle_type: OracleType, n: int) -> Tuple[qs.QuantumCircu
 
 
 def dj_algorithm_circuit_generate(oracle: Gate, n: int) -> qs.QuantumCircuit:
+    """
+    @brief Generuje obwód kwantowy dla algorytmu Deutscha-Jozsy.
+
+    @param oracle Bramka wyrocznii do wstawienia w obwodzie
+    @param n Liczba kubitów wejściowych
+    @return Obwód kwantowy algorytmu Deutscha-Jozsy z pomiarami
+    """
     dj_circuit = qs.QuantumCircuit(n+1, n)
     dj_circuit.x(n)
     dj_circuit.h(range(n+1))
